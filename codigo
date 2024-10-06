@@ -1,0 +1,21 @@
+from bs4 import BeautifulSoup
+from io import StringIO
+import pandas as pd
+import requests
+     
+url = 'https://pt.wikipedia.org/wiki/Lista_de_faturamento_dos_clubes_de_futebol_brasileiro'
+
+tabela = soup.find_all('table')
+tabela = soup.find('span', 'mw-editsection').find_next('table')
+
+response = requests.get(url)
+soup = BeautifulSoup(response.text, "html.parser")
+
+tabela_io = StringIO(str(tabela))   
+df.to_csv('Lista de faturamento dos clubes de futebol brasileiro', index=False)
+
+df.drop_duplicates(inplace=True)
+df.shape
+
+df = pd.read_html(tabela_io)[0]
+df
